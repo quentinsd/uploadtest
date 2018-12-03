@@ -6,9 +6,10 @@ class SignUp extends Component {
     this.state = {
       email: "mon@email.com",
       password: "monPassw0rd",
-      passwordbis: "Yolo",
+      passwordbis: "monPassw0rd",
       name: "James",
-      lastname: "Bond"
+      lastname: "Bond",
+      flash: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,6 +31,24 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     console.log("A name was submitted: " + JSON.stringify(this.state, 1, 1));
+    fetch("/auth/signup", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+        lastname: this.state.lastname
+      })
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      );
+
     event.preventDefault();
   }
   render() {
