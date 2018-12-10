@@ -7,6 +7,14 @@ class App extends Component {
     return (
       <div>
         <SignUp />
+        <form
+          method="POST"
+          enctype="multipart/form-data"
+          action="uploaddufichier"
+        >
+          <input type="file" name="monfichier" accept="image/png" multiple />
+          <button> envoyer </button>
+        </form>
       </div>
     );
   }
